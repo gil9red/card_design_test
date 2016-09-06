@@ -75,15 +75,6 @@ void MainWindow::on_actionFill_triggered()
     for (QGraphicsItem* item: items) {
         item->setFlag(QGraphicsItem::ItemIsSelectable, true);
 
-//        card->addToGroup(item);
-//        if (item->data(Qt::UserRole + 2).toBool()) {
-//            card->addToGroup(item);
-//        } else {
-//            scene.addItem(item);
-//        }
-
-//        card->addItem(item);
-
         scene.addItem(item);
 
         QPointF pos = item->data(Qt::UserRole + 1).toPointF();

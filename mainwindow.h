@@ -65,28 +65,6 @@ public:
         addToGroup(backSide);
     }
 
-//    void addItem(QGraphicsItem* item) {
-//        QPointF pos = item->data(Qt::UserRole + 1).toPointF();
-
-//        CardSide* side = item->data(Qt::UserRole).toBool() ? backSide : frontSide;
-//        pos = side->mapToScene(pos);
-
-////        // Теперь напишем свой аналог для расстановки элементов
-////        QPointF pos;
-
-////        // Альбомная ориентация
-////        if (isLandscape) {
-////            pos = item->pos() + side->pos();
-
-////        // Портретная ориентация
-////        } else {
-////            pos = mapToScene(side->pos() + side->boundingRect().topRight());
-////            pos = item->pos() + pos;
-////        }
-
-//        item->setPos(pos);
-//    }
-
     CardSide* frontSide;
     CardSide* backSide;
 
