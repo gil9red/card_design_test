@@ -90,7 +90,9 @@ void MainWindow::on_actionFill_triggered()
         item->setPos(pos);
 
         CardSide* side = item->data(Qt::UserRole).toBool() ? card->backSide : card->frontSide;
-        pos = side->mapToScene(pos);
+
+        // Старый способ раположения элементов, работал только с альбомной ориентацией
+        // pos = side->mapToScene(pos);
 
         // Теперь напишем свой аналог для расстановки элементов
 
