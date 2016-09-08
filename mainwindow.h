@@ -85,6 +85,12 @@ public:
         this->isFrontSide = isFrontSide;
         this->isFixedPos = isFixedPos;
 
+        if (isFixedPos) {
+            setDefaultTextColor(Qt::darkGreen);
+        }
+
+        setPos(_x, _y);
+
         setFlag(QGraphicsItem::ItemIsSelectable, true);
     }
 
