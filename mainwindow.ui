@@ -39,6 +39,8 @@
    </attribute>
    <addaction name="actionRotate"/>
    <addaction name="actionFill"/>
+   <addaction name="actionTransformItems"/>
+   <addaction name="actionTransfromCard"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionRotate">
@@ -52,6 +54,22 @@
   <action name="actionFill">
    <property name="text">
     <string>Fill</string>
+   </property>
+  </action>
+  <action name="actionTransformItems">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>TransformItems</string>
+   </property>
+  </action>
+  <action name="actionTransfromCard">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>TransfromCard</string>
    </property>
   </action>
  </widget>

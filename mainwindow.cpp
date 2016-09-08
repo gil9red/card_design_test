@@ -17,23 +17,21 @@ MainWindow::MainWindow(QWidget *parent) :
     card = new Card();
     scene.addItem(card);
 
-    QGraphicsItem* item = scene.addText("1234 1234 1234 1234 4", QFont("Arial", 12));
-    item->setData(Qt::UserRole, false);
-    item->setData(Qt::UserRole + 1, QPointF(10, 10));
-    item->setData(Qt::UserRole + 2, true);
+    TextElement* item = new TextElement("1234 1234 1234 1234 4", true, 10, 10, 12, false);
+    scene.addItem(item);
     items.append(item);
 
-    item = scene.addText("999", QFont("Arial", 16));
-    item->setData(Qt::UserRole, false);
-    item->setData(Qt::UserRole + 1, QPointF(10, 35));
+    item = new TextElement("999", true, 10, 35, 16, false);
+    scene.addItem(item);
     items.append(item);
 
-    item = scene.addText("John Smith", QFont("Arial", 16));
-    item->setData(Qt::UserRole, true);
-    item->setData(Qt::UserRole + 1, QPointF(5, 5));
+    item = new TextElement("John Smith", false, 5, 5, 16, false);
+    scene.addItem(item);
     items.append(item);
 
     on_actionFill_triggered();
+
+//    ui->graphicsView->scale(.6, .6);
 
     resize(700, 700);
 }
@@ -72,31 +70,63 @@ void MainWindow::on_actionFill_triggered()
         scene.removeItem(item);
     }
 
-    for (QGraphicsItem* item: items) {
-        item->setFlag(QGraphicsItem::ItemIsSelectable, true);
-
+    for (TextElement* item: items) {
         scene.addItem(item);
 
-        QPointF pos = item->data(Qt::UserRole + 1).toPointF();
-        item->setPos(pos);
-
-        CardSide* side = item->data(Qt::UserRole).toBool() ? card->backSide : card->frontSide;
-
-        // Старый способ раположения элементов, работал только с альбомной ориентацией
-        // pos = side->mapToScene(pos);
-
-        // Теперь напишем свой аналог для расстановки элементов
+        QPointF pos(item->_x, item->_y);
+        CardSide* side = item->isFrontSide ? card->frontSide : card->backSide;
 
         // Альбомная ориентация
         if (card->isLandscape) {
-            pos = item->pos() + side->pos();
+            pos = side->pos() + pos;
 
         // Портретная ориентация
         } else {
-            pos = card->mapToScene(side->pos() + side->boundingRect().topRight());
-            pos = item->pos() + pos;
+            QPointF posSide = card->mapToScene(side->pos() + side->boundingRect().topRight());
+            pos = posSide + pos;
         }
 
         item->setPos(pos);
     }
+}
+
+void MainWindow::on_actionTransformItems_triggered(bool checked)
+{
+    // Поворот всей карты
+    QPointF center = card->boundingRect().center();
+    QTransform transform;
+
+    if (checked) {
+        transform.translate(center.x(), center.y())
+                 .rotate(-90)
+                 .translate(-center.x(), -center.y());
+
+    } else {
+        transform.translate(center.x(), center.y())
+                 .rotate(90)
+                 .translate(-center.x(), -center.y());
+    }
+
+    for (QGraphicsItem* item: items) {
+        item->setTransform(transform, true);
+    }
+}
+
+void MainWindow::on_actionTransfromCard_triggered(bool checked)
+{
+    // Поворот всей карты
+    QPointF center = card->boundingRect().center();
+    QTransform transform;
+
+    if (checked) {
+        transform.translate(center.x(), center.y())
+                 .rotate(-90)
+                 .translate(-center.x(), -center.y());
+
+    } else {
+        transform.translate(center.x(), center.y())
+                 .rotate(90)
+                 .translate(-center.x(), -center.y());
+    }
+    card->setTransform(transform, true);
 }

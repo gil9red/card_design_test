@@ -73,6 +73,34 @@ public:
 };
 
 
+class TextElement: public QGraphicsTextItem {
+public:
+    TextElement(const QString& text, bool isFrontSide, double _x, double _y, int fontSize, int isFixedPos=false): QGraphicsTextItem() {
+        setPlainText(text);
+        setFont(QFont("Arial", fontSize));
+
+        this->_x = _x;
+        this->_y = _y;
+
+        this->isFrontSide = isFrontSide;
+        this->isFixedPos = isFixedPos;
+
+        setFlag(QGraphicsItem::ItemIsSelectable, true);
+    }
+
+    bool isFrontSide = true;
+    bool isFixedPos = false;
+
+    // По условиям моделируемой задачи, значения не содержатся в полях элемента,
+    // а приходят из вне.
+    // _x и _y -- значения, не зависящие от положения и ориентации сторон
+    // поэтому они указываются только раз и используются только чтобы
+    // рассчитать правильное положение элемента с учетом того на какой
+    // стороне карты он размещается и где находится эта сторона
+    double _x;
+    double _y;
+};
+
 
 class MainWindow : public QMainWindow
 {
@@ -85,13 +113,16 @@ public:
 private slots:
     void on_actionRotate_triggered(bool checked);
     void on_actionFill_triggered();
+    void on_actionTransformItems_triggered(bool checked);
+
+    void on_actionTransfromCard_triggered(bool checked);
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene scene;
 
     Card* card;
-    QList<QGraphicsItem*> items;
+    QList<TextElement*> items;
 };
 
 
