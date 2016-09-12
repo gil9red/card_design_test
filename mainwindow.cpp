@@ -28,6 +28,9 @@ MainWindow::MainWindow(QWidget *parent) :
     item = new TextElement("John Smith", false, 5, 5, 16, false);
     items.append(item);
 
+    item = new TextElement("John Smith", false, 5, 150, 16, true);
+    items.append(item);
+
     item = new TextElement("1234 1234 1234 1234 4", true, 10, 150, 12, true);
     items.append(item);
 
@@ -130,8 +133,14 @@ void MainWindow::on_actionFill_triggered()
             }
             item->setTransform(transform, true);
 
-            if (!card->isLandscape) {
-                QPointF posSide = card->mapToScene(side->rect().topLeft());
+            if (card->isLandscape) {
+                pos = side->pos() + pos;
+
+            } else {
+//                QPointF posSide = card->mapToScene(side->rect().topLeft());
+                QPointF posSide = card->mapToScene(side->pos());
+//                qDebug() << card->mapToScene(card->frontSide->rect().topLeft()) << card->mapToScene(card->backSide->rect().topLeft());
+//                qDebug() << card->mapToScene(card->frontSide->pos()) << card->mapToScene(card->backSide->pos());
 
 //                QPointF topLeft = card->mapToScene(side->rect().topLeft());
 //                QPointF bottomLeft = card->mapToScene(side->rect().bottomLeft());
