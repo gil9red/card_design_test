@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->graphicsView->setScene(&scene);
     ui->graphicsView->viewport()->installEventFilter(this);
-//    setMouseTracking(true);
 
     // Убираем ползунки прокрутки
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -40,8 +39,6 @@ MainWindow::MainWindow(QWidget *parent) :
     on_actionFill_triggered();
 
     resize(700, 700);
-
-
 }
 
 MainWindow::~MainWindow()
@@ -101,8 +98,6 @@ void MainWindow::on_actionFill_triggered()
         scene.removeItem(item);
     }
 
-    scene.addEllipse(-5, -5, 10, 10, Qt::NoPen, Qt::darkGreen);
-
     for (TextElement* item: items) {
         scene.addItem(item);
 
@@ -137,27 +132,8 @@ void MainWindow::on_actionFill_triggered()
                 pos = side->pos() + pos;
 
             } else {
-//                QPointF posSide = card->mapToScene(side->rect().topLeft());
                 QPointF posSide = card->mapToScene(side->pos());
-//                qDebug() << card->mapToScene(card->frontSide->rect().topLeft()) << card->mapToScene(card->backSide->rect().topLeft());
-//                qDebug() << card->mapToScene(card->frontSide->pos()) << card->mapToScene(card->backSide->pos());
-
-//                QPointF topLeft = card->mapToScene(side->rect().topLeft());
-//                QPointF bottomLeft = card->mapToScene(side->rect().bottomLeft());
-//                scene.addLine(topLeft.x(), topLeft.y(), bottomLeft.x(), bottomLeft.y(), QPen(Qt::red, 2));
-
-//                scene.addRect(QRectF(posSide, QSizeF(10, 10)), Qt::NoPen, Qt::red);
-
-//                qDebug()<< topLeft << bottomLeft;
-//                qDebug()<< posSide << pos << posSide + QPointF(pos.y(), pos.x());
-
                 pos = QPointF(posSide.x() + pos.y(), posSide.y() - pos.x());
-
-//                pos = posSide + QPointF(pos.y(), pos.x());
-
-//                pos = QPointF();
-
-//                scene.addRect(QRectF(pos, item->boundingRect().size()), Qt::NoPen, QColor(255, 0, 0, 100));
             }
         }
 
