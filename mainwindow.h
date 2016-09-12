@@ -7,6 +7,9 @@
 #include <QGraphicsItemGroup>
 #include <QDebug>
 
+#include <QMouseEvent>
+#include <QStatusBar>
+
 
 namespace Ui {
 class MainWindow;
@@ -120,8 +123,17 @@ private slots:
     void on_actionRotate_triggered(bool checked);
     void on_actionFill_triggered();
     void on_actionTransformItems_triggered(bool checked);
-
     void on_actionTransfromCard_triggered(bool checked);
+
+    void on_actionAddX_triggered();
+    void on_actionAddY_triggered();
+    void on_actionMinusX_triggered();
+    void on_actionMinusY_triggered();
+
+    void on_actionRotateItem_triggered(bool checked);
+
+protected:
+    bool eventFilter(QObject* obj, QEvent* e);
 
 private:
     Ui::MainWindow *ui;
@@ -129,6 +141,8 @@ private:
 
     Card* card;
     QList<TextElement*> items;
+
+    bool needRotate = false;
 };
 
 
