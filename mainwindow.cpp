@@ -85,7 +85,7 @@ void MainWindow::on_actionRotate_triggered(bool checked)
 
     needRotate = true;
 
-//    on_actionFill_triggered();
+    on_actionFill_triggered();
 }
 
 void MainWindow::on_actionFill_triggered()
