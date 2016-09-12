@@ -111,7 +111,7 @@ void MainWindow::on_actionFill_triggered()
             }
 
         } else {
-            // Поворот всей карты
+            // Поворот зафиксированного элемента
             QTransform transform;
 
             // временный костыль
