@@ -36,6 +36,11 @@ MainWindow::MainWindow(QWidget *parent) :
     item = new TextElement("@@@@@", true, 0, 0, 12, true);
     items.append(item);
 
+    for (QGraphicsItem* item: items) {
+        scene.addItem(item);
+    }
+
+
     on_actionFill_triggered();
 
     resize(700, 700);
@@ -90,17 +95,7 @@ void MainWindow::on_actionRotate_triggered(bool checked)
 
 void MainWindow::on_actionFill_triggered()
 {
-    for (QGraphicsItem* item: items) {
-        if (item->scene() != &scene) {
-            continue;
-        }
-
-        scene.removeItem(item);
-    }
-
     for (TextElement* item: items) {
-        scene.addItem(item);
-
         QPointF pos(item->_x, item->_y);
         CardSide* side = item->isFrontSide ? card->frontSide : card->backSide;
 
