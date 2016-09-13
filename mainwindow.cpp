@@ -71,19 +71,12 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* e) {
 void MainWindow::on_actionRotate_triggered(bool checked)
 {
     // Поворот всей карты
-    QPointF center = card->boundingRect().center();
     QTransform transform;
 
-    if (checked) {
-        transform.translate(center.x(), center.y())
-                 .rotate(-90)
-                 .translate(-center.x(), -center.y());
+    checked ?
+        transform.rotate(-90).translate(-card->boundingRect().width(), 0) :
+        transform.rotate(90).translate(0, -card->boundingRect().width());
 
-    } else {
-        transform.translate(center.x(), center.y())
-                 .rotate(90)
-                 .translate(-center.x(), -center.y());
-    }
     card->setTransform(transform, true);
 
     card->isLandscape = !checked;
