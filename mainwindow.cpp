@@ -43,8 +43,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
+    QPolygonF polygonF = card->mapToScene(card->boundingRect());
     qreal size = std::max(card->boundingRect().width(), card->boundingRect().height());
-    ui->graphicsView->setSceneRect(QRectF(-10, -10, size, size));
+    ui->graphicsView->setSceneRect(QRectF(-10 + polygonF.first().x(), -10 - polygonF.first().x(), size, size));
 
 
     on_actionFill_triggered();
