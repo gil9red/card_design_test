@@ -119,6 +119,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void updateSceneRect();
+
 private slots:
     void on_actionRotate_triggered(bool checked);
     void on_actionFill_triggered();

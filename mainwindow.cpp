@@ -42,10 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-
-    QPolygonF polygonF = card->mapToScene(card->boundingRect());
-    qreal size = std::max(card->boundingRect().width(), card->boundingRect().height());
-    ui->graphicsView->setSceneRect(QRectF(-10 + polygonF.first().x(), -10 - polygonF.first().x(), size, size));
+    updateSceneRect();
 
 
     on_actionFill_triggered();
@@ -56,6 +53,15 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::updateSceneRect() {
+    QPolygonF polygonF = card->mapToScene(card->boundingRect());
+    qreal x = -10 + polygonF.first().x();
+    qreal y = -10 - polygonF.first().x();
+    qreal width = card->boundingRect().width();
+    qreal height = card->boundingRect().height();
+    ui->graphicsView->setSceneRect(QRectF(x, y, width, height));
 }
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* e) {
@@ -100,9 +106,7 @@ void MainWindow::on_actionRotate_triggered(bool checked)
     on_actionFill_triggered();
 
 
-    QPolygonF polygonF = card->mapToScene(card->boundingRect());
-    qreal size = std::max(card->boundingRect().width(), card->boundingRect().height());
-    ui->graphicsView->setSceneRect(QRectF(-10 + polygonF.first().x(), -10 - polygonF.first().x(), size, size));
+    updateSceneRect();
 }
 
 void MainWindow::on_actionFill_triggered()
