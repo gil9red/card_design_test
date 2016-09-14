@@ -41,6 +41,12 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
 
+    ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+
+    qreal size = std::max(card->boundingRect().width(), card->boundingRect().height());
+    ui->graphicsView->setSceneRect(QRectF(-10, -10, size, size));
+
+
     on_actionFill_triggered();
 
     resize(700, 700);
@@ -91,6 +97,11 @@ void MainWindow::on_actionRotate_triggered(bool checked)
     needRotate = true;
 
     on_actionFill_triggered();
+
+
+    QPolygonF polygonF = card->mapToScene(card->boundingRect());
+    qreal size = std::max(card->boundingRect().width(), card->boundingRect().height());
+    ui->graphicsView->setSceneRect(QRectF(-10 + polygonF.first().x(), -10 - polygonF.first().x(), size, size));
 }
 
 void MainWindow::on_actionFill_triggered()
@@ -233,4 +244,36 @@ void MainWindow::on_actionRotateItem_triggered(bool checked)
             item->setTransform(transform, true);
         }
     }
+}
+
+void MainWindow::on_actionAddViewX_triggered()
+{
+    QRectF sceneRect = ui->graphicsView->sceneRect();
+    sceneRect.moveRight(sceneRect.right() + 5);
+
+    ui->graphicsView->setSceneRect(sceneRect);
+}
+
+void MainWindow::on_actionMinusViewX_triggered()
+{
+    QRectF sceneRect = ui->graphicsView->sceneRect();
+    sceneRect.moveLeft(sceneRect.left() + 5);
+
+    ui->graphicsView->setSceneRect(sceneRect);
+}
+
+void MainWindow::on_actionAddViewY_triggered()
+{
+    QRectF sceneRect = ui->graphicsView->sceneRect();
+    sceneRect.moveBottom(sceneRect.bottom() + 5);
+
+    ui->graphicsView->setSceneRect(sceneRect);
+}
+
+void MainWindow::on_actionMinusViewY_triggered()
+{
+    QRectF sceneRect = ui->graphicsView->sceneRect();
+    sceneRect.moveTop(sceneRect.top() + 5);
+
+    ui->graphicsView->setSceneRect(sceneRect);
 }

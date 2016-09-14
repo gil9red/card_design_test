@@ -132,6 +132,11 @@ private slots:
 
     void on_actionRotateItem_triggered(bool checked);
 
+    void on_actionAddViewX_triggered();
+    void on_actionMinusViewX_triggered();
+    void on_actionAddViewY_triggered();
+    void on_actionMinusViewY_triggered();
+
 protected:
     bool eventFilter(QObject* obj, QEvent* e);
 
