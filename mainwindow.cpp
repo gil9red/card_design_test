@@ -41,6 +41,23 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
 
+    ImageElement* imgItem = new ImageElement(true, 100, 100, 40, 20);
+    items2.append(imgItem);
+
+    imgItem = new ImageElement(true, 5, 5, 10, 5);
+    items2.append(imgItem);
+
+    imgItem = new ImageElement(false, 5, 5, 10, 5);
+    items2.append(imgItem);
+
+    imgItem = new ImageElement(false, 5, 100, 10, 5);
+    items2.append(imgItem);
+
+    for (QGraphicsItem* item: items2) {
+        scene.addItem(item);
+    }
+
+
     ui->graphicsView->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     updateSceneRect();
 
@@ -146,6 +163,24 @@ void MainWindow::on_actionFill_triggered()
                 QPointF posSide = card->mapToScene(side->pos());
                 pos = QPointF(posSide.x() + pos.y(), posSide.y() - pos.x());
             }
+        }
+
+        item->setPos(pos);
+    }
+
+
+    for (ImageElement* item: items2) {
+        QPointF pos(item->_x, item->_y);
+        CardSide* side = item->isFrontSide ? card->frontSide : card->backSide;
+
+        // Альбомная ориентация
+        if (card->isLandscape) {
+            pos = side->pos() + pos;
+
+        // Портретная ориентация
+        } else {
+            QPointF posSide = card->mapToScene(side->pos() + side->boundingRect().topRight());
+            pos = posSide + pos;
         }
 
         item->setPos(pos);

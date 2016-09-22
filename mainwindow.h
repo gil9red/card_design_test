@@ -111,6 +111,35 @@ public:
 };
 
 
+class ImageElement: public QGraphicsPixmapItem {
+public:
+    ImageElement(bool isFrontSide, double _x, double _y, int w, int h): QGraphicsPixmapItem() {
+        this->_x = _x;
+        this->_y = _y;
+        setPos(_x, _y);
+
+        this->isFrontSide = isFrontSide;
+
+        QPixmap pixmap(w, h);
+        pixmap.fill(Qt::darkCyan);
+        setPixmap(pixmap);
+
+        setFlag(QGraphicsItem::ItemIsSelectable, true);
+    }
+
+    bool isFrontSide = true;
+
+    // По условиям моделируемой задачи, значения не содержатся в полях элемента,
+    // а приходят из вне.
+    // _x и _y -- значения, не зависящие от положения и ориентации сторон
+    // поэтому они указываются только раз и используются только чтобы
+    // рассчитать правильное положение элемента с учетом того на какой
+    // стороне карты он размещается и где находится эта сторона
+    double _x;
+    double _y;
+};
+
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -148,6 +177,10 @@ private:
 
     Card* card;
     QList<TextElement*> items;
+
+    // TODO: по хорошему нужно объединить элементы одним предком
+    // и через него работать
+    QList<ImageElement*> items2;
 
     bool needRotate = false;
 };
